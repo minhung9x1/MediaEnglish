@@ -29,17 +29,20 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.lstBoxSong = new System.Windows.Forms.ListBox();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.btnSetting = new System.Windows.Forms.Button();
             this.lblStatus = new System.Windows.Forms.Label();
             this.lblDuring = new System.Windows.Forms.Label();
             this.lblPosition = new System.Windows.Forms.Label();
-            this.lblFileName = new System.Windows.Forms.Label();
             this.btnNext = new System.Windows.Forms.Button();
-            this.lblTitle = new System.Windows.Forms.Label();
             this.btnPrevTime = new System.Windows.Forms.Button();
             this.btnNextTime = new System.Windows.Forms.Button();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
@@ -48,7 +51,6 @@
             this.rbFile = new System.Windows.Forms.RadioButton();
             this.btnPlay = new System.Windows.Forms.Button();
             this.btnOpen = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
             this.trackBar1 = new System.Windows.Forms.TrackBar();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -56,9 +58,18 @@
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.SuspendLayout();
+            // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Location = new System.Drawing.Point(0, 553);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(1023, 22);
+            this.statusStrip1.TabIndex = 0;
+            this.statusStrip1.Text = "statusStrip1";
             // 
             // tableLayoutPanel1
             // 
@@ -70,15 +81,15 @@
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 76F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 80F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1023, 575);
-            this.tableLayoutPanel1.TabIndex = 0;
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1023, 553);
+            this.tableLayoutPanel1.TabIndex = 1;
             // 
             // splitContainer1
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(3, 79);
+            this.splitContainer1.Location = new System.Drawing.Point(3, 83);
             this.splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
@@ -88,7 +99,7 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.richTextBox1);
-            this.splitContainer1.Size = new System.Drawing.Size(1017, 493);
+            this.splitContainer1.Size = new System.Drawing.Size(1017, 467);
             this.splitContainer1.SplitterDistance = 214;
             this.splitContainer1.TabIndex = 11;
             // 
@@ -101,8 +112,10 @@
             this.lstBoxSong.ItemHeight = 16;
             this.lstBoxSong.Location = new System.Drawing.Point(0, 0);
             this.lstBoxSong.Name = "lstBoxSong";
-            this.lstBoxSong.Size = new System.Drawing.Size(214, 493);
+            this.lstBoxSong.Size = new System.Drawing.Size(214, 467);
             this.lstBoxSong.TabIndex = 0;
+            this.lstBoxSong.SelectedIndexChanged += new System.EventHandler(this.LstBoxSong_SelectedIndexChanged);
+            this.lstBoxSong.DoubleClick += new System.EventHandler(this.LstBoxSong_DoubleClick);
             this.lstBoxSong.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lstBoxSong_KeyDown);
             // 
             // richTextBox1
@@ -112,18 +125,20 @@
             this.richTextBox1.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.richTextBox1.Location = new System.Drawing.Point(0, 0);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(799, 493);
+            this.richTextBox1.Size = new System.Drawing.Size(799, 467);
             this.richTextBox1.TabIndex = 0;
             this.richTextBox1.Text = "";
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.numericUpDown2);
+            this.panel1.Controls.Add(this.comboBox1);
+            this.panel1.Controls.Add(this.label1);
+            this.panel1.Controls.Add(this.btnSetting);
             this.panel1.Controls.Add(this.lblStatus);
             this.panel1.Controls.Add(this.lblDuring);
             this.panel1.Controls.Add(this.lblPosition);
-            this.panel1.Controls.Add(this.lblFileName);
             this.panel1.Controls.Add(this.btnNext);
-            this.panel1.Controls.Add(this.lblTitle);
             this.panel1.Controls.Add(this.btnPrevTime);
             this.panel1.Controls.Add(this.btnNextTime);
             this.panel1.Controls.Add(this.numericUpDown1);
@@ -132,28 +147,85 @@
             this.panel1.Controls.Add(this.rbFile);
             this.panel1.Controls.Add(this.btnPlay);
             this.panel1.Controls.Add(this.btnOpen);
-            this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.trackBar1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(3, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1017, 70);
+            this.panel1.Size = new System.Drawing.Size(1017, 74);
             this.panel1.TabIndex = 1;
+            // 
+            // numericUpDown2
+            // 
+            this.numericUpDown2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.numericUpDown2.Location = new System.Drawing.Point(442, 51);
+            this.numericUpDown2.Maximum = new decimal(new int[] {
+            40,
+            0,
+            0,
+            0});
+            this.numericUpDown2.Minimum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.numericUpDown2.Name = "numericUpDown2";
+            this.numericUpDown2.Size = new System.Drawing.Size(42, 22);
+            this.numericUpDown2.TabIndex = 18;
+            this.numericUpDown2.Value = new decimal(new int[] {
+            12,
+            0,
+            0,
+            0});
+            this.numericUpDown2.ValueChanged += new System.EventHandler(this.numericUpDown2_ValueChanged);
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(219, 51);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(217, 23);
+            this.comboBox1.TabIndex = 17;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(11, 49);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(55, 18);
+            this.label1.TabIndex = 16;
+            this.label1.Text = "Repeat";
+            // 
+            // btnSetting
+            // 
+            this.btnSetting.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSetting.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSetting.Location = new System.Drawing.Point(983, 14);
+            this.btnSetting.Name = "btnSetting";
+            this.btnSetting.Size = new System.Drawing.Size(25, 10);
+            this.btnSetting.TabIndex = 15;
+            this.btnSetting.Text = "s";
+            this.btnSetting.UseVisualStyleBackColor = true;
+            this.btnSetting.Click += new System.EventHandler(this.btnSetting_Click);
             // 
             // lblStatus
             // 
             this.lblStatus.AutoSize = true;
-            this.lblStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblStatus.Location = new System.Drawing.Point(118, 13);
+            this.lblStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblStatus.Location = new System.Drawing.Point(147, 14);
             this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(0, 16);
+            this.lblStatus.Size = new System.Drawing.Size(36, 18);
             this.lblStatus.TabIndex = 14;
+            this.lblStatus.Text = "Play";
             // 
             // lblDuring
             // 
             this.lblDuring.AutoSize = true;
             this.lblDuring.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDuring.Location = new System.Drawing.Point(666, 16);
+            this.lblDuring.Location = new System.Drawing.Point(666, 14);
             this.lblDuring.Name = "lblDuring";
             this.lblDuring.Size = new System.Drawing.Size(56, 16);
             this.lblDuring.TabIndex = 13;
@@ -161,28 +233,18 @@
             // 
             // lblPosition
             // 
-            this.lblPosition.AutoSize = true;
             this.lblPosition.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPosition.Location = new System.Drawing.Point(217, 16);
+            this.lblPosition.Location = new System.Drawing.Point(217, 14);
             this.lblPosition.Name = "lblPosition";
+            this.lblPosition.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lblPosition.Size = new System.Drawing.Size(56, 16);
             this.lblPosition.TabIndex = 13;
             this.lblPosition.Text = "00:00:00";
             // 
-            // lblFileName
-            // 
-            this.lblFileName.AutoSize = true;
-            this.lblFileName.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblFileName.Location = new System.Drawing.Point(223, 49);
-            this.lblFileName.Name = "lblFileName";
-            this.lblFileName.Size = new System.Drawing.Size(39, 18);
-            this.lblFileName.TabIndex = 6;
-            this.lblFileName.Text = "Title:";
-            // 
             // btnNext
             // 
             this.btnNext.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnNext.Location = new System.Drawing.Point(769, 44);
+            this.btnNext.Location = new System.Drawing.Point(780, 45);
             this.btnNext.Name = "btnNext";
             this.btnNext.Size = new System.Drawing.Size(37, 22);
             this.btnNext.TabIndex = 3;
@@ -190,19 +252,10 @@
             this.btnNext.UseVisualStyleBackColor = true;
             this.btnNext.Click += new System.EventHandler(this.btnNext_Click);
             // 
-            // lblTitle
-            // 
-            this.lblTitle.AutoSize = true;
-            this.lblTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTitle.Location = new System.Drawing.Point(271, 50);
-            this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(0, 18);
-            this.lblTitle.TabIndex = 11;
-            // 
             // btnPrevTime
             // 
             this.btnPrevTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnPrevTime.Location = new System.Drawing.Point(824, 44);
+            this.btnPrevTime.Location = new System.Drawing.Point(835, 45);
             this.btnPrevTime.Name = "btnPrevTime";
             this.btnPrevTime.Size = new System.Drawing.Size(37, 22);
             this.btnPrevTime.TabIndex = 3;
@@ -213,7 +266,7 @@
             // btnNextTime
             // 
             this.btnNextTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnNextTime.Location = new System.Drawing.Point(914, 44);
+            this.btnNextTime.Location = new System.Drawing.Point(925, 45);
             this.btnNextTime.Name = "btnNextTime";
             this.btnNextTime.Size = new System.Drawing.Size(37, 22);
             this.btnNextTime.TabIndex = 3;
@@ -224,7 +277,7 @@
             // numericUpDown1
             // 
             this.numericUpDown1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numericUpDown1.Location = new System.Drawing.Point(867, 44);
+            this.numericUpDown1.Location = new System.Drawing.Point(878, 45);
             this.numericUpDown1.Name = "numericUpDown1";
             this.numericUpDown1.Size = new System.Drawing.Size(40, 22);
             this.numericUpDown1.TabIndex = 4;
@@ -238,7 +291,7 @@
             // 
             this.rbList.AutoSize = true;
             this.rbList.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rbList.Location = new System.Drawing.Point(132, 49);
+            this.rbList.Location = new System.Drawing.Point(123, 50);
             this.rbList.Name = "rbList";
             this.rbList.Size = new System.Drawing.Size(46, 20);
             this.rbList.TabIndex = 8;
@@ -248,7 +301,7 @@
             // btnPrev
             // 
             this.btnPrev.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnPrev.Location = new System.Drawing.Point(726, 44);
+            this.btnPrev.Location = new System.Drawing.Point(737, 45);
             this.btnPrev.Name = "btnPrev";
             this.btnPrev.Size = new System.Drawing.Size(37, 22);
             this.btnPrev.TabIndex = 3;
@@ -261,7 +314,7 @@
             this.rbFile.AutoSize = true;
             this.rbFile.Checked = true;
             this.rbFile.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rbFile.Location = new System.Drawing.Point(72, 49);
+            this.rbFile.Location = new System.Drawing.Point(69, 50);
             this.rbFile.Name = "rbFile";
             this.rbFile.Size = new System.Drawing.Size(48, 20);
             this.rbFile.TabIndex = 8;
@@ -271,7 +324,8 @@
             // 
             // btnPlay
             // 
-            this.btnPlay.Location = new System.Drawing.Point(726, 7);
+            this.btnPlay.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnPlay.Location = new System.Drawing.Point(737, 7);
             this.btnPlay.Name = "btnPlay";
             this.btnPlay.Size = new System.Drawing.Size(80, 32);
             this.btnPlay.TabIndex = 5;
@@ -281,27 +335,18 @@
             // 
             // btnOpen
             // 
-            this.btnOpen.Location = new System.Drawing.Point(9, 12);
+            this.btnOpen.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnOpen.Location = new System.Drawing.Point(12, 8);
             this.btnOpen.Name = "btnOpen";
-            this.btnOpen.Size = new System.Drawing.Size(79, 32);
+            this.btnOpen.Size = new System.Drawing.Size(80, 32);
             this.btnOpen.TabIndex = 7;
             this.btnOpen.Text = "Open";
             this.btnOpen.UseVisualStyleBackColor = true;
             this.btnOpen.Click += new System.EventHandler(this.btnOpen_Click);
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(9, 51);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(59, 16);
-            this.label1.TabIndex = 6;
-            this.label1.Text = "Repeat: ";
-            // 
             // trackBar1
             // 
-            this.trackBar1.Location = new System.Drawing.Point(270, 12);
+            this.trackBar1.Location = new System.Drawing.Point(270, 10);
             this.trackBar1.Name = "trackBar1";
             this.trackBar1.Size = new System.Drawing.Size(393, 45);
             this.trackBar1.TabIndex = 12;
@@ -316,6 +361,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1023, 575);
             this.Controls.Add(this.tableLayoutPanel1);
+            this.Controls.Add(this.statusStrip1);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -328,35 +374,39 @@
             this.splitContainer1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
+        private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
-        private System.Windows.Forms.Button btnNext;
-        private System.Windows.Forms.Button btnNextTime;
-        private System.Windows.Forms.Button btnPrev;
-        private System.Windows.Forms.Button btnPrevTime;
-        private System.Windows.Forms.Button btnPlay;
-        private System.Windows.Forms.RadioButton rbList;
-        private System.Windows.Forms.RadioButton rbFile;
-        private System.Windows.Forms.Button btnOpen;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label lblFileName;
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.RichTextBox richTextBox1;
-        private System.Windows.Forms.Label lblTitle;
         private System.Windows.Forms.ListBox lstBoxSong;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button btnSetting;
+        private System.Windows.Forms.Label lblStatus;
         private System.Windows.Forms.Label lblDuring;
         private System.Windows.Forms.Label lblPosition;
+        private System.Windows.Forms.Button btnNext;
+        private System.Windows.Forms.Button btnPrevTime;
+        private System.Windows.Forms.Button btnNextTime;
+        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.RadioButton rbList;
+        private System.Windows.Forms.Button btnPrev;
+        private System.Windows.Forms.RadioButton rbFile;
+        private System.Windows.Forms.Button btnPlay;
+        private System.Windows.Forms.Button btnOpen;
         private System.Windows.Forms.TrackBar trackBar1;
-        private System.Windows.Forms.Label lblStatus;
+        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.NumericUpDown numericUpDown2;
     }
 }
 

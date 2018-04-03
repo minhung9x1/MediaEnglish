@@ -58,8 +58,17 @@ namespace MediaEnglish
             Timerr.Interval = 500;
             Timerr.Tick += Timerr_Tick;
             richTextBox1.SetInnerMargins(24, 24, 20, 0);
+            tableLayoutPanel1.RowStyles[0].Height = 48;
+            comboBox1.DrawItem += ComboBoxFonts_DrawItem;
+            comboBox1.DataSource = System.Drawing.FontFamily.Families.ToList();
+            comboBox1.DisplayMember = "Name";
+            comboBox1.SelectedIndexChanged += ComboBox1_SelectedIndexChanged;
         }
 
+        private void ComboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            richTextBox1.Font = new Font((FontFamily)((ComboBox) sender).SelectedItem,(int)numericUpDown2.Value);
+        }
 
         private void LstBoxSong_DragDrop(object sender, DragEventArgs e)
         {
@@ -88,10 +97,7 @@ namespace MediaEnglish
 
         private void Timerr_Tick(object sender, EventArgs e)
         {
-            TimeSpan t = TimeSpan.FromSeconds(Player.CurrentPosition);
-            lblPosition.Text = t.ToString(@"hh\:mm\:ss");
-
-            trackBar1.Value = (int) Player.CurrentPosition;
+           UpdateTimeForSeek();
         }
 
         private void Player_PlayStatusChange(WMPPlayState status)
@@ -104,10 +110,9 @@ namespace MediaEnglish
 
             if (status == WMPPlayState.wmppsPlaying)
             {
-                trackBar1.Maximum = (int) Player.During;
+                trackBar1.Maximum = (int)Player.During;
                 TimeSpan t = TimeSpan.FromSeconds(Player.During);
-                lblDuring.Text = t.ToString(@"hh\:mm\:ss");
-
+                lblDuring.Text = t.Hours==0? t.ToString(@"mm\:ss") : t.ToString(@"hh\:mm\:ss");
                 Timerr.Start();
                 btnPlay.Text = "Pause";
             }
@@ -134,7 +139,7 @@ namespace MediaEnglish
         private void CurrentSongChange(Song current)
         {
             Player.FileName = current.Path;
-            lblTitle.Text = current.FileName;
+            this.Text = "Media English Player - "+ current.FileName;
         }
 
         private void LstBoxSong_DoubleClick(object sender, EventArgs e)
@@ -146,16 +151,17 @@ namespace MediaEnglish
 
         private void btnPlay_Click(object sender, EventArgs e)
         {
-            PlayClick();
+            PlayClick(2);
         }
 
-        private void PlayClick()
+        private void PlayClick(int number)
         {
             if (CurrentSong == null) return;
 
             if (Player.isPlaying)
             {
                 Player.Pause();
+                UpdateSeek(number * -1);
                 btnPlay.Text = "Play";
             }
             else
@@ -167,7 +173,21 @@ namespace MediaEnglish
 
         private void btnNextTime_Click(object sender, EventArgs e)
         {
-            Player.Seek = Player.Seek + (int) numericUpDown1.Value;
+            UpdateSeek((int)numericUpDown1.Value);
+        }
+
+        private void UpdateSeek(int number)
+        {
+            if (CurrentSong == null) return;
+            Player.Seek = Player.Seek + number;
+            UpdateTimeForSeek();
+        }
+
+        private void UpdateTimeForSeek()
+        {
+            TimeSpan t = TimeSpan.FromSeconds(Player.Seek);
+            lblPosition.Text = t.Hours==0 ? t.ToString(@"mm\:ss") : t.ToString(@"hh\:mm\:ss");
+            trackBar1.Value = (int) Player.Seek;
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
@@ -175,14 +195,20 @@ namespace MediaEnglish
             if (Player == null) return false;
             switch (keyData)
             {
+                case Keys.F6:
                 case Keys.Control | Keys.Left:
-                    Player.Seek = Player.Seek - (int) numericUpDown1.Value;
+                    UpdateSeek((int)numericUpDown1.Value * -1);
                     return true;
+                case Keys.F7:
                 case Keys.Control | Keys.Right:
-                    Player.Seek = Player.Seek + (int) numericUpDown1.Value;
+                    UpdateSeek((int)numericUpDown1.Value);
                     return true;
+                case Keys.F5:
                 case Keys.Control | Keys.Space:
-                    PlayClick();
+                    PlayClick(2);
+                    return true;
+                case Keys.F8:
+                    PlayClick(3);
                     return true;
                 case Keys.Control | Keys.O:
                     btnOpen.PerformClick();
@@ -196,13 +222,19 @@ namespace MediaEnglish
                     PrevSongNotInList();
                     PrevSong();
                     return true;
+                case Keys.Control | Keys.B:
+                    BoldRickText();
+                    return true;
+                case Keys.Control | Keys.R:
+                    ColorRichText();
+                    return true;
             }
             return base.ProcessCmdKey(ref msg, keyData);
         }
 
         private void btnPrevTime_Click(object sender, EventArgs e)
         {
-            Player.Seek = Player.Seek - (int) numericUpDown1.Value;
+            UpdateSeek((int)numericUpDown1.Value *-1);
         }
 
         private void btnOpen_Click(object sender, EventArgs e)
@@ -267,21 +299,19 @@ namespace MediaEnglish
                 where new string[] {".mp3",".wav",".wma"}.Contains(n.Extension.ToLower())
                 select n;
             var nextFile= lstSongs.SkipWhile(x => x.Name != item.FileName).Skip(1).FirstOrDefault();
-            if (nextFile != null)
+            if (nextFile == null) return;
+            lstBoxSong.Items.Clear();
+            ListFiles = new Dictionary<int, Song>();
+            var newSong = new Song
             {
-                lstBoxSong.Items.Clear();
-                ListFiles = new Dictionary<int, Song>();
-                var newSong = new Song
-                {
-                    Path = nextFile.FullName,
-                    Id = 1,
-                    FileName = nextFile.Name
-                };
-                ListFiles.Add(1,newSong);
-                lstBoxSong.Items.Add(newSong);
-                CurrentSong = newSong;
-            }
-            return;
+                Path = nextFile.FullName,
+                Id = 1,
+                FileName = nextFile.Name
+            };
+            ListFiles.Add(1,newSong);
+            lstBoxSong.Items.Add(newSong);
+            CurrentSong = newSong;
+          
         }
         private void PrevSongNotInList()
         {
@@ -292,21 +322,19 @@ namespace MediaEnglish
             var lstSongs = from n in allFiles.GetFiles()
                 select n;
             var prevFile= lstSongs.TakeWhile(x => x.Name != item.FileName).LastOrDefault();
-            if (prevFile != null)
+            if (prevFile == null) return;
+            lstBoxSong.Items.Clear();
+            ListFiles = new Dictionary<int, Song>();
+            var newSong = new Song
             {
-                lstBoxSong.Items.Clear();
-                ListFiles = new Dictionary<int, Song>();
-                var newSong = new Song
-                {
-                    Path = prevFile.FullName,
-                    Id = 1,
-                    FileName = prevFile.Name
-                };
-                ListFiles.Add(1,newSong);
-                lstBoxSong.Items.Add(newSong);
-                CurrentSong = newSong;
-            }
-            return;
+                Path = prevFile.FullName,
+                Id = 1,
+                FileName = prevFile.Name
+            };
+            ListFiles.Add(1,newSong);
+            lstBoxSong.Items.Add(newSong);
+            CurrentSong = newSong;
+       
         }
         private void btnNext_Click(object sender, EventArgs e)
         {
@@ -322,9 +350,11 @@ namespace MediaEnglish
 
         private void trackBar1_Scroll(object sender, EventArgs e)
         {
-            Player.CurrentPosition = trackBar1.Value;
+            if (CurrentSong == null) return;
+            Player.Seek = trackBar1.Value;
+            TimeSpan t = TimeSpan.FromSeconds(Player.Seek);
+            lblPosition.Text = t.Hours == 0 ? t.ToString(@"mm\:ss") : t.ToString(@"hh\:mm\:ss");
         }
-
 
         private void trackBar1_MouseDown(object sender, MouseEventArgs e)
         {
@@ -361,6 +391,72 @@ namespace MediaEnglish
             else
             {
                 lstBoxSong.SelectedIndex = index - 1;
+            }
+        }
+
+        private bool colspan = false;
+        private void btnSetting_Click(object sender, EventArgs e)
+        {
+            if (colspan)
+            {
+                tableLayoutPanel1.RowStyles[0].Height = 48;
+                colspan = false;
+            }
+            else
+            {
+                tableLayoutPanel1.RowStyles[0].Height = 80;
+                colspan = true;
+            }
+           
+           
+        }
+        private void ComboBoxFonts_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            var comboBox = (ComboBox)sender;
+            var fontFamily = (FontFamily)comboBox.Items[e.Index];
+            var font = new Font(fontFamily, comboBox.Font.SizeInPoints);
+            e.DrawBackground();
+            e.Graphics.DrawString(font.Name, font, Brushes.Black, e.Bounds.X, e.Bounds.Y);
+        }
+
+        private void numericUpDown2_ValueChanged(object sender, EventArgs e)
+        {
+            richTextBox1.Font = new Font(richTextBox1.Font.FontFamily,(int)numericUpDown2.Value);
+        }
+
+        private void BoldRickText()
+        {
+            if (richTextBox1.SelectionFont.Bold)
+            {
+                richTextBox1.SelectionFont = richTextBox1.Font;
+            }
+            else
+            {
+              //  int selStart = richTextBox1.SelectionStart;
+               // int selLength = richTextBox1.SelectionLength;
+                richTextBox1.SelectionFont = new Font(richTextBox1.Font, FontStyle.Bold);
+               // richTextBox1.SelectionStart = selStart + selLength;
+               // richTextBox1.SelectionLength = 0;
+               // richTextBox1.SelectionFont = richTextBox1.Font;
+               // richTextBox1.Select(selStart, selLength);
+            }
+        }
+
+        private void ColorRichText()
+        {
+            if (richTextBox1.SelectionBackColor == Color.Yellow)
+            {
+                richTextBox1.SelectionBackColor = richTextBox1.BackColor;
+            }
+            else
+            {
+               // int selStart = richTextBox1.SelectionStart;
+               // int selLength = richTextBox1.SelectionLength;
+                richTextBox1.SelectionBackColor = Color.Yellow;
+               // richTextBox1.SelectionStart = selStart + selLength;
+               // richTextBox1.SelectionLength = 0;
+               // richTextBox1.SelectionBackColor = richTextBox1.BackColor;
+                //richTextBox1.Select(selStart, selLength);
             }
         }
     }
