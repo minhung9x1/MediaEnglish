@@ -161,6 +161,7 @@ namespace MediaEnglish
             if (Player.isPlaying)
             {
                 Player.Pause();
+                if (!chkPauseTime.Checked) number = 0;
                 UpdateSeek(number * -1);
                 btnPlay.Text = "Play";
             }

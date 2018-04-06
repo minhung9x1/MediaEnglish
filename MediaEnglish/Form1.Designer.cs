@@ -52,6 +52,7 @@
             this.btnPlay = new System.Windows.Forms.Button();
             this.btnOpen = new System.Windows.Forms.Button();
             this.trackBar1 = new System.Windows.Forms.TrackBar();
+            this.chkPauseTime = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -131,6 +132,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.chkPauseTime);
             this.panel1.Controls.Add(this.numericUpDown2);
             this.panel1.Controls.Add(this.comboBox1);
             this.panel1.Controls.Add(this.label1);
@@ -355,6 +357,17 @@
             this.trackBar1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.trackBar1_MouseDown);
             this.trackBar1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.trackBar1_MouseUp);
             // 
+            // chkPauseTime
+            // 
+            this.chkPauseTime.AutoSize = true;
+            this.chkPauseTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkPauseTime.Location = new System.Drawing.Point(500, 54);
+            this.chkPauseTime.Name = "chkPauseTime";
+            this.chkPauseTime.Size = new System.Drawing.Size(97, 20);
+            this.chkPauseTime.TabIndex = 19;
+            this.chkPauseTime.Text = "Lùi khi dừng";
+            this.chkPauseTime.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -407,6 +420,7 @@
         private System.Windows.Forms.TrackBar trackBar1;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.NumericUpDown numericUpDown2;
+        private System.Windows.Forms.CheckBox chkPauseTime;
     }
 }
 
