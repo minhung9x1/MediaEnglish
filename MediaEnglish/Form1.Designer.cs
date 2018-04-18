@@ -35,6 +35,7 @@
             this.lstBoxSong = new System.Windows.Forms.ListBox();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.chkPauseTime = new System.Windows.Forms.CheckBox();
             this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -52,7 +53,7 @@
             this.btnPlay = new System.Windows.Forms.Button();
             this.btnOpen = new System.Windows.Forms.Button();
             this.trackBar1 = new System.Windows.Forms.TrackBar();
-            this.chkPauseTime = new System.Windows.Forms.CheckBox();
+            this.chkOnTop = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -132,6 +133,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.chkOnTop);
             this.panel1.Controls.Add(this.chkPauseTime);
             this.panel1.Controls.Add(this.numericUpDown2);
             this.panel1.Controls.Add(this.comboBox1);
@@ -155,6 +157,17 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1017, 74);
             this.panel1.TabIndex = 1;
+            // 
+            // chkPauseTime
+            // 
+            this.chkPauseTime.AutoSize = true;
+            this.chkPauseTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkPauseTime.Location = new System.Drawing.Point(500, 54);
+            this.chkPauseTime.Name = "chkPauseTime";
+            this.chkPauseTime.Size = new System.Drawing.Size(97, 20);
+            this.chkPauseTime.TabIndex = 19;
+            this.chkPauseTime.Text = "Lùi khi dừng";
+            this.chkPauseTime.UseVisualStyleBackColor = true;
             // 
             // numericUpDown2
             // 
@@ -357,16 +370,17 @@
             this.trackBar1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.trackBar1_MouseDown);
             this.trackBar1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.trackBar1_MouseUp);
             // 
-            // chkPauseTime
+            // chkOnTop
             // 
-            this.chkPauseTime.AutoSize = true;
-            this.chkPauseTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chkPauseTime.Location = new System.Drawing.Point(500, 54);
-            this.chkPauseTime.Name = "chkPauseTime";
-            this.chkPauseTime.Size = new System.Drawing.Size(97, 20);
-            this.chkPauseTime.TabIndex = 19;
-            this.chkPauseTime.Text = "Lùi khi dừng";
-            this.chkPauseTime.UseVisualStyleBackColor = true;
+            this.chkOnTop.AutoSize = true;
+            this.chkOnTop.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkOnTop.Location = new System.Drawing.Point(603, 55);
+            this.chkOnTop.Name = "chkOnTop";
+            this.chkOnTop.Size = new System.Drawing.Size(69, 20);
+            this.chkOnTop.TabIndex = 20;
+            this.chkOnTop.Text = "OnTop";
+            this.chkOnTop.UseVisualStyleBackColor = true;
+            this.chkOnTop.CheckedChanged += new System.EventHandler(this.chkOnTop_CheckedChanged);
             // 
             // Form1
             // 
@@ -421,6 +435,7 @@
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.NumericUpDown numericUpDown2;
         private System.Windows.Forms.CheckBox chkPauseTime;
+        private System.Windows.Forms.CheckBox chkOnTop;
     }
 }
 

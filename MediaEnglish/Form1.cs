@@ -460,5 +460,17 @@ namespace MediaEnglish
                 //richTextBox1.Select(selStart, selLength);
             }
         }
+
+        private void chkOnTop_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkOnTop.Checked)
+            {
+                this.TopMost = true;
+            }
+            else
+            {
+                this.TopMost = false;
+            }
+        }
     }
 }
